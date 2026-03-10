@@ -748,7 +748,6 @@
 </footer>
 
 <!-- VENMO CHECKOUT OVERLAY -->
-<!-- VENMO: replace YOUR_VENMO_USERNAME below with your actual Venmo handle -->
 <div class="venmo-overlay" id="venmo-overlay">
   <div class="venmo-box">
     <h2>Complete Your Order</h2>
@@ -824,8 +823,7 @@
   }
 
   function checkout() {
-    // VENMO: replace YOUR_VENMO_USERNAME with your actual Venmo handle
-    const VENMO_USERNAME = 'YOUR_VENMO_USERNAME';
+    const VENMO_USERNAME = '__VENMO_USERNAME__';
 
     const total = cart.reduce((s,i) => s + i.price, 0);
     const itemLines = cart.map(i => `${i.name} ($${i.price})`).join(', ');
