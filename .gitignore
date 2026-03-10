@@ -1,0 +1,9 @@
+# Environment variables — keep secrets out of git
+.env
+
+# Build output
+dist/
+
+# OS junk
+.DS_Store
+Thumbs.db

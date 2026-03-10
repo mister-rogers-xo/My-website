@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#0a0a0a"/>
+  <!-- Gold accent bar top -->
+  <rect width="1200" height="6" fill="#c9a84c"/>
+  <!-- Gold accent bar bottom -->
+  <rect y="624" width="1200" height="6" fill="#c9a84c"/>
+
+  <!-- Left decorative column -->
+  <rect x="80" y="80" width="2" height="470" fill="#c9a84c" opacity="0.4"/>
+
+  <!-- XO symbol large background -->
+  <text x="900" y="420" font-family="Georgia, serif" font-size="320" fill="#c9a84c" opacity="0.08" text-anchor="middle">XO</text>
+
+  <!-- Brand name -->
+  <text x="140" y="220" font-family="Georgia, 'Times New Roman', serif" font-size="72" fill="#f5f0e8" font-weight="700" letter-spacing="2">Mister Rogers XO</text>
+
+  <!-- Gold rule -->
+  <rect x="140" y="248" width="480" height="2" fill="#c9a84c"/>
+
+  <!-- Tagline -->
+  <text x="140" y="310" font-family="'Courier New', Courier, monospace" font-size="22" fill="#c9a84c" letter-spacing="4">CONSISTENCY + SWAG = CULTURE</text>
+
+  <!-- Description -->
+  <text x="140" y="375" font-family="Arial, sans-serif" font-size="26" fill="#f5f0e8" opacity="0.85">Art · Culture · Community · Philadelphia</text>
+  <text x="140" y="415" font-family="Arial, sans-serif" font-size="26" fill="#f5f0e8" opacity="0.85">Original Prints · Limited Drops · Wearable Art</text>
+
+  <!-- Bottom handle -->
+  <text x="140" y="530" font-family="'Courier New', Courier, monospace" font-size="20" fill="#c9a84c" opacity="0.7" letter-spacing="3">@MisterRogersXO · Philadelphia, PA</text>
+
+  <!-- Gold accent right -->
+  <rect x="1118" y="80" width="2" height="470" fill="#c9a84c" opacity="0.4"/>
+</svg>
