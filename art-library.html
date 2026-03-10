@@ -4,6 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Art Library + Shop | Mister Rogers XO</title>
+<!-- Open Graph / Social Media -->
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://mister-rogers-xo.github.io/My-website/art-library.html" />
+<meta property="og:title" content="XO Art Library & Drop Shop — Mister Rogers XO" />
+<meta property="og:description" content="Original prints, wearable art, and limited drops. Every piece ships directly to you — no middleman. Culture made physical." />
+<meta property="og:image" content="https://mister-rogers-xo.github.io/My-website/og-image.svg" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="XO Art Library & Drop Shop — Mister Rogers XO" />
+<meta name="twitter:description" content="Original prints, wearable art, and limited drops. Ships direct. No middleman." />
+<meta name="twitter:image" content="https://mister-rogers-xo.github.io/My-website/og-image.svg" />
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -358,6 +368,48 @@
 
   .btn-checkout:hover { background: var(--warm-gray); }
 
+  /* VENMO CHECKOUT OVERLAY */
+  .venmo-overlay {
+    display: none; position: fixed; inset: 0; z-index: 200;
+    background: rgba(10,10,10,0.92); justify-content: center; align-items: center;
+  }
+  .venmo-overlay.visible { display: flex; }
+  .venmo-box {
+    background: var(--warm-gray); border: 1px solid var(--gold);
+    padding: 2.5rem 3rem; max-width: 480px; width: 90%; text-align: center;
+  }
+  .venmo-box h2 {
+    font-family: 'Playfair Display', serif; font-size: 1.6rem;
+    color: var(--cream); margin-bottom: 0.5rem;
+  }
+  .venmo-box .venmo-total {
+    font-family: 'Space Mono', monospace; font-size: 2rem;
+    color: var(--gold); margin: 1rem 0;
+  }
+  .venmo-box .venmo-items {
+    font-size: 0.85rem; color: var(--cream); opacity: 0.7;
+    margin-bottom: 1.5rem; font-family: 'DM Sans', sans-serif; line-height: 1.6;
+  }
+  .venmo-btn {
+    display: inline-block; background: #008CFF; color: #fff;
+    padding: 0.9rem 2.5rem; font-family: 'Space Mono', monospace;
+    font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;
+    text-decoration: none; font-weight: 700; margin-bottom: 1rem; cursor: pointer;
+    border: none; transition: background 0.2s;
+  }
+  .venmo-btn:hover { background: #006bbf; }
+  .venmo-instruction {
+    font-family: 'DM Sans', sans-serif; font-size: 0.82rem;
+    color: var(--gold); line-height: 1.6; margin-bottom: 1.5rem;
+  }
+  .venmo-close {
+    background: none; border: 1px solid rgba(245,240,232,0.3); color: var(--cream);
+    padding: 0.5rem 1.5rem; font-family: 'Space Mono', monospace;
+    font-size: 0.65rem; letter-spacing: 0.1em; cursor: pointer;
+    text-transform: uppercase;
+  }
+  .venmo-close:hover { border-color: var(--gold); color: var(--gold); }
+
   footer {
     background: var(--warm-gray); border-top: 1px solid rgba(201,168,76,0.15);
     padding: 3rem 6rem; text-align: center; margin-bottom: 0;
@@ -695,6 +747,26 @@
   <p>© 2025 Mister Rogers XO · Somewhere Media LLC · All art is print-on-demand and ships directly to you · <a href="index.html">Back to Home</a></p>
 </footer>
 
+<!-- VENMO CHECKOUT OVERLAY -->
+<!-- VENMO: replace YOUR_VENMO_USERNAME below with your actual Venmo handle -->
+<div class="venmo-overlay" id="venmo-overlay">
+  <div class="venmo-box">
+    <h2>Complete Your Order</h2>
+    <div class="venmo-total" id="venmo-total">$0.00</div>
+    <div class="venmo-items" id="venmo-items"></div>
+    <a class="venmo-btn" id="venmo-link" href="#" target="_blank" rel="noopener">
+      Pay with Venmo →
+    </a>
+    <p class="venmo-instruction">
+      After sending payment, DM <strong>@MisterRogersXO</strong> on Instagram with:<br>
+      your name · shipping address · order confirmation screenshot
+    </p>
+    <button class="venmo-close" onclick="document.getElementById('venmo-overlay').classList.remove('visible')">
+      Back to Shop
+    </button>
+  </div>
+</div>
+
 <script>
   let cart = [];
   let currentItem = {};
@@ -752,9 +824,23 @@
   }
 
   function checkout() {
+    // VENMO: replace YOUR_VENMO_USERNAME with your actual Venmo handle
+    const VENMO_USERNAME = 'YOUR_VENMO_USERNAME';
+
     const total = cart.reduce((s,i) => s + i.price, 0);
-    const items = cart.map(i => i.name).join(', ');
-    alert(`Order Summary:\n${items}\n\nTotal: $${total}.00\n\nIn production: Connect your Printful, Printify, or Gelato account to activate live checkout with direct drop shipping. Your order will then ship straight to the customer within 5–10 business days.`);
+    const itemLines = cart.map(i => `${i.name} ($${i.price})`).join(', ');
+    const note = encodeURIComponent('XO Art Order: ' + itemLines);
+
+    // Build Venmo deep link
+    const venmoURL = `https://venmo.com/${VENMO_USERNAME}?txn=pay&amount=${total}&note=${note}`;
+
+    // Populate overlay
+    document.getElementById('venmo-total').textContent = `$${total}.00`;
+    document.getElementById('venmo-items').textContent = itemLines;
+    document.getElementById('venmo-link').href = venmoURL;
+
+    // Show overlay
+    document.getElementById('venmo-overlay').classList.add('visible');
   }
 </script>
 
