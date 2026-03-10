@@ -38,9 +38,8 @@ if (fs.existsSync(envPath)) {
 const VENMO_USERNAME = process.env.VENMO_USERNAME;
 
 if (!VENMO_USERNAME || VENMO_USERNAME === 'YOUR_VENMO_USERNAME') {
-  console.error('ERROR: VENMO_USERNAME is not set or still a placeholder.');
-  console.error('  Edit .env and set VENMO_USERNAME=your_actual_handle');
-  process.exit(1);
+  console.warn('WARN: VENMO_USERNAME is not set — Venmo checkout will be disabled in the built site.');
+  console.warn('  Add a VENMO_USERNAME secret in GitHub Actions (Settings → Secrets → Actions) to enable it.');
 }
 
 // ---------------------------------------------------------------------------
@@ -61,7 +60,7 @@ HTML_FILES.forEach(file => {
   const src = path.join(SRC_DIR, file);
   if (!fs.existsSync(src)) { console.warn(`WARN: ${file} not found, skipping.`); return; }
   const content = fs.readFileSync(src, 'utf8')
-    .replace(/__VENMO_USERNAME__/g, VENMO_USERNAME);
+    .replace(/__VENMO_USERNAME__/g, VENMO_USERNAME || '');
   fs.writeFileSync(path.join(DIST_DIR, file), content);
   console.log(`  built  ${file}`);
 });
