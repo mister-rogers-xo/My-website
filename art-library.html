@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Art Library + Shop | Mister Rogers XO</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0a0a;
+    --cream: #f5f0e8;
+    --gold: #c9a84c;
+    --red: #c0392b;
+    --rust: #b5451b;
+    --warm-gray: #2a2420;
+    --accent: #e8d5a3;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--black); color: var(--cream); font-family: 'DM Sans', sans-serif; }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.2rem 3rem;
+    background: rgba(10,10,10,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+  }
+
+  .nav-logo {
+    font-family: 'Playfair Display', serif; font-size: 1.3rem;
+    font-weight: 900; color: var(--gold); text-decoration: none;
+  }
+  .nav-logo span { color: var(--cream); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    color: var(--cream); text-decoration: none;
+    font-family: 'Space Mono', monospace; font-size: 0.7rem;
+    letter-spacing: 0.15em; text-transform: uppercase; opacity: 0.7; transition: all 0.3s;
+  }
+  .nav-links a:hover, .nav-links a.active { color: var(--gold); opacity: 1; }
+
+  /* HERO */
+  .page-hero {
+    padding: 10rem 6rem 5rem;
+    background: var(--warm-gray);
+    border-bottom: 1px solid rgba(201,168,76,0.15);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-hero::before {
+    content: 'XO';
+    position: absolute; right: -2rem; top: 50%; transform: translateY(-50%);
+    font-family: 'Playfair Display', serif; font-size: 20rem; font-weight: 900;
+    font-style: italic; color: transparent;
+    -webkit-text-stroke: 1px rgba(201,168,76,0.08);
+    line-height: 1; pointer-events: none;
+  }
+
+  .page-hero-tag {
+    font-family: 'Space Mono', monospace; font-size: 0.65rem;
+    letter-spacing: 0.3em; color: var(--gold); text-transform: uppercase;
+    margin-bottom: 1.5rem; display: flex; align-items: center; gap: 1rem;
+  }
+  .page-hero-tag::before { content: ''; width: 40px; height: 1px; background: var(--gold); }
+
+  .page-hero h1 {
+    font-family: 'Playfair Display', serif; font-size: clamp(3rem, 5vw, 5rem);
+    font-weight: 900; line-height: 1;
+  }
+  .page-hero h1 em { color: var(--gold); font-style: italic; }
+
+  .page-hero p {
+    max-width: 500px; margin-top: 1.5rem; font-size: 1rem; line-height: 1.8;
+    color: rgba(245,240,232,0.6); font-weight: 300;
+  }
+
+  /* FILTER BAR */
+  .filter-bar {
+    background: var(--black); padding: 1.5rem 6rem;
+    border-bottom: 1px solid rgba(201,168,76,0.1);
+    display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;
+    position: sticky; top: 70px; z-index: 50;
+  }
+
+  .filter-label {
+    font-family: 'Space Mono', monospace; font-size: 0.6rem;
+    letter-spacing: 0.2em; color: rgba(245,240,232,0.35);
+    text-transform: uppercase; margin-right: 0.5rem;
+  }
+
+  .filter-btn {
+    background: transparent; border: 1px solid rgba(201,168,76,0.2);
+    color: rgba(245,240,232,0.55); padding: 0.5rem 1.2rem;
+    font-family: 'Space Mono', monospace; font-size: 0.6rem;
+    letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .filter-btn:hover, .filter-btn.active {
+    background: var(--gold); color: var(--black);
+    border-color: var(--gold);
+  }
+
+  /* GRID */
+  .gallery-section { padding: 4rem 6rem; }
+
+  .section-header {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 2.5rem; padding-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(201,168,76,0.1);
+  }
+
+  .section-header h2 {
+    font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700;
+  }
+  .section-header span {
+    font-family: 'Space Mono', monospace; font-size: 0.6rem;
+    letter-spacing: 0.15em; color: rgba(245,240,232,0.35); text-transform: uppercase;
+  }
+
+  .art-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+  }
+
+  .art-card {
+    background: var(--warm-gray);
+    border: 1px solid rgba(201,168,76,0.1);
+    overflow: hidden; transition: all 0.4s; cursor: pointer;
+    position: relative;
+  }
+
+  .art-card:hover { border-color: rgba(201,168,76,0.5); transform: translateY(-6px); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+
+  .art-canvas {
+    aspect-ratio: 3/4;
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+    background: var(--black);
+  }
+
+  .art-symbol {
+    font-family: 'Playfair Display', serif; font-weight: 900; font-style: italic;
+    position: relative; z-index: 2; user-select: none;
+    transition: transform 0.4s;
+  }
+
+  .art-card:hover .art-symbol { transform: scale(1.05); }
+
+  .art-bg {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at center, rgba(201,168,76,0.08) 0%, transparent 70%);
+  }
+
+  .art-badge {
+    position: absolute; top: 1rem; left: 1rem; z-index: 3;
+    background: var(--gold); color: var(--black);
+    font-family: 'Space Mono', monospace; font-size: 0.5rem;
+    letter-spacing: 0.1em; padding: 0.3rem 0.7rem; text-transform: uppercase; font-weight: 700;
+  }
+
+  .art-badge.sold { background: rgba(245,240,232,0.15); color: rgba(245,240,232,0.5); }
+  .art-badge.limited { background: var(--rust); color: var(--cream); }
+
+  .art-info { padding: 1.5rem; }
+
+  .art-cat {
+    font-family: 'Space Mono', monospace; font-size: 0.55rem;
+    letter-spacing: 0.15em; color: var(--gold); text-transform: uppercase; margin-bottom: 0.5rem;
+  }
+
+  .art-title {
+    font-family: 'Playfair Display', serif; font-size: 1.1rem;
+    font-weight: 700; margin-bottom: 0.4rem;
+  }
+
+  .art-desc {
+    font-size: 0.8rem; color: rgba(245,240,232,0.5);
+    line-height: 1.6; font-weight: 300; margin-bottom: 1.25rem;
+  }
+
+  .art-footer { display: flex; justify-content: space-between; align-items: center; }
+
+  .art-price {
+    font-family: 'Playfair Display', serif; font-size: 1.3rem;
+    font-weight: 700; color: var(--gold);
+  }
+
+  .art-price .size {
+    font-family: 'Space Mono', monospace; font-size: 0.5rem;
+    color: rgba(245,240,232,0.35); display: block; text-transform: uppercase; letter-spacing: 0.1em;
+  }
+
+  .btn-add {
+    background: var(--gold); color: var(--black); border: none;
+    padding: 0.6rem 1.2rem;
+    font-family: 'Space Mono', monospace; font-size: 0.6rem;
+    letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer;
+    font-weight: 700; transition: all 0.3s;
+  }
+
+  .btn-add:hover { background: var(--cream); }
+  .btn-add:disabled { background: rgba(245,240,232,0.1); color: rgba(245,240,232,0.3); cursor: not-allowed; }
+
+  /* DROPSHIPPING BANNER */
+  .ship-banner {
+    margin: 3rem 6rem;
+    background: var(--warm-gray);
+    border: 1px solid rgba(201,168,76,0.2);
+    padding: 3rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  .ship-banner h3 {
+    font-family: 'Playfair Display', serif; font-size: 1.6rem;
+    font-weight: 700; margin-bottom: 1rem; color: var(--gold);
+  }
+
+  .ship-banner p {
+    font-size: 0.9rem; line-height: 1.7; color: rgba(245,240,232,0.6); font-weight: 300;
+  }
+
+  .ship-steps { display: flex; gap: 0; margin-top: 2rem; }
+
+  .ship-step {
+    flex: 1; padding: 1.5rem; background: var(--black);
+    border-right: 1px solid rgba(201,168,76,0.1); text-align: center;
+  }
+
+  .ship-step:last-child { border-right: none; }
+
+  .ship-step-num {
+    font-family: 'Playfair Display', serif; font-size: 2rem;
+    font-weight: 900; color: rgba(201,168,76,0.2); font-style: italic;
+    margin-bottom: 0.5rem;
+  }
+
+  .ship-step h4 {
+    font-family: 'Space Mono', monospace; font-size: 0.6rem;
+    letter-spacing: 0.15em; color: var(--gold); text-transform: uppercase; margin-bottom: 0.4rem;
+  }
+
+  .ship-step p { font-size: 0.75rem; color: rgba(245,240,232,0.45); line-height: 1.5; }
+
+  /* MODAL */
+  .modal-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.85);
+    z-index: 200; display: none; align-items: center; justify-content: center;
+    padding: 2rem;
+  }
+
+  .modal-overlay.open { display: flex; }
+
+  .modal {
+    background: var(--warm-gray); max-width: 700px; width: 100%;
+    border: 1px solid rgba(201,168,76,0.2); max-height: 90vh; overflow-y: auto;
+  }
+
+  .modal-close {
+    position: absolute; top: 1rem; right: 1.5rem; background: none; border: none;
+    color: var(--cream); font-size: 1.5rem; cursor: pointer; opacity: 0.5; transition: opacity 0.3s;
+  }
+
+  .modal-close:hover { opacity: 1; }
+
+  .modal-grid { display: grid; grid-template-columns: 1fr 1fr; }
+
+  .modal-art {
+    aspect-ratio: 1; background: var(--black);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif; font-size: 6rem;
+    font-weight: 900; font-style: italic; color: var(--gold);
+    border-right: 1px solid rgba(201,168,76,0.15);
+  }
+
+  .modal-body { padding: 2.5rem; position: relative; }
+
+  .modal-cat {
+    font-family: 'Space Mono', monospace; font-size: 0.55rem;
+    letter-spacing: 0.2em; color: var(--gold); text-transform: uppercase; margin-bottom: 1rem;
+  }
+
+  .modal-title {
+    font-family: 'Playfair Display', serif; font-size: 1.6rem;
+    font-weight: 700; margin-bottom: 1rem;
+  }
+
+  .modal-desc {
+    font-size: 0.85rem; line-height: 1.8; color: rgba(245,240,232,0.6);
+    font-weight: 300; margin-bottom: 1.5rem;
+  }
+
+  .modal-options { margin-bottom: 1.5rem; }
+
+  .modal-options label {
+    font-family: 'Space Mono', monospace; font-size: 0.55rem;
+    letter-spacing: 0.15em; color: rgba(245,240,232,0.45); text-transform: uppercase;
+    display: block; margin-bottom: 0.5rem;
+  }
+
+  .modal-options select {
+    width: 100%; padding: 0.7rem 1rem;
+    background: var(--black); border: 1px solid rgba(201,168,76,0.2);
+    color: var(--cream); font-family: 'DM Sans', sans-serif; font-size: 0.85rem;
+    outline: none; margin-bottom: 1rem;
+  }
+
+  .modal-price {
+    font-family: 'Playfair Display', serif; font-size: 2rem;
+    font-weight: 900; color: var(--gold); margin-bottom: 1.5rem;
+  }
+
+  .btn-order {
+    width: 100%; padding: 1rem;
+    background: var(--gold); color: var(--black); border: none;
+    font-family: 'Space Mono', monospace; font-size: 0.7rem;
+    letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer;
+    font-weight: 700; transition: all 0.3s;
+  }
+
+  .btn-order:hover { background: var(--cream); }
+
+  .modal-shipping {
+    margin-top: 1rem; font-family: 'Space Mono', monospace; font-size: 0.55rem;
+    letter-spacing: 0.1em; color: rgba(245,240,232,0.3); text-transform: uppercase;
+  }
+
+  /* CART */
+  .cart-bar {
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
+    background: var(--gold); padding: 1rem 6rem;
+    display: none; justify-content: space-between; align-items: center;
+  }
+
+  .cart-bar.visible { display: flex; }
+
+  .cart-info {
+    font-family: 'Space Mono', monospace; font-size: 0.7rem;
+    letter-spacing: 0.15em; color: var(--black); font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  .btn-checkout {
+    background: var(--black); color: var(--gold); border: none;
+    padding: 0.7rem 2rem;
+    font-family: 'Space Mono', monospace; font-size: 0.7rem;
+    letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer;
+    font-weight: 700; transition: all 0.3s;
+  }
+
+  .btn-checkout:hover { background: var(--warm-gray); }
+
+  footer {
+    background: var(--warm-gray); border-top: 1px solid rgba(201,168,76,0.15);
+    padding: 3rem 6rem; text-align: center; margin-bottom: 0;
+  }
+
+  footer p {
+    font-family: 'Space Mono', monospace; font-size: 0.55rem;
+    letter-spacing: 0.15em; color: rgba(245,240,232,0.25); text-transform: uppercase;
+  }
+
+  footer a { color: var(--gold); text-decoration: none; }
+
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { gap: 1rem; }
+    .page-hero { padding: 8rem 2rem 3rem; }
+    .filter-bar { padding: 1rem 1.5rem; }
+    .gallery-section { padding: 3rem 1.5rem; }
+    .art-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+    .ship-banner { margin: 2rem 1.5rem; grid-template-columns: 1fr; padding: 2rem; }
+    .ship-steps { flex-direction: column; }
+    .ship-step { border-right: none; border-bottom: 1px solid rgba(201,168,76,0.1); }
+    .modal-grid { grid-template-columns: 1fr; }
+    .modal-art { aspect-ratio: 2/1; font-size: 4rem; }
+    .cart-bar { padding: 1rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Mister Rogers <span>XO</span></a>
+  <ul class="nav-links">
+    <li><a href="art-library.html" class="active">Art + Shop</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="linktree.html">Links</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="page-hero-tag">Mister Rogers XO · Art Library</div>
+  <h1>The <em>Art</em><br>Collection</h1>
+  <p>Original prints, wearable art, and limited drops. Every piece ships directly to you — no middleman, no waiting. Just culture made physical.</p>
+</div>
+
+<!-- FILTER BAR -->
+<div class="filter-bar">
+  <span class="filter-label">Filter:</span>
+  <button class="filter-btn active" onclick="filterItems('all', this)">All</button>
+  <button class="filter-btn" onclick="filterItems('print', this)">Art Prints</button>
+  <button class="filter-btn" onclick="filterItems('apparel', this)">Apparel</button>
+  <button class="filter-btn" onclick="filterItems('lifestyle', this)">Lifestyle</button>
+  <button class="filter-btn" onclick="filterItems('limited', this)">Limited Drops</button>
+</div>
+
+<!-- HOW IT SHIPS -->
+<div class="ship-banner">
+  <div>
+    <h3>How Drop Shipping Works</h3>
+    <p>You order directly through this site. Your item is printed on demand and shipped straight to your door — no warehousing, no overstock, no waste. Every order is fresh, quality-checked, and delivered within 5–10 business days.</p>
+    <div class="ship-steps">
+      <div class="ship-step">
+        <div class="ship-step-num">1</div>
+        <h4>You Order</h4>
+        <p>Select your item, size, and finish</p>
+      </div>
+      <div class="ship-step">
+        <div class="ship-step-num">2</div>
+        <h4>Print On Demand</h4>
+        <p>Your item is printed fresh by our fulfillment partner</p>
+      </div>
+      <div class="ship-step">
+        <div class="ship-step-num">3</div>
+        <h4>Direct Ship</h4>
+        <p>Ships to your door in 5–10 business days</p>
+      </div>
+      <div class="ship-step">
+        <div class="ship-step-num">4</div>
+        <h4>Love It</h4>
+        <p>Or we make it right — satisfaction guaranteed</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ART GRID -->
+<section class="gallery-section">
+  <div class="section-header">
+    <h2>Art Prints</h2>
+    <span id="item-count">12 pieces</span>
+  </div>
+  <div class="art-grid" id="art-grid">
+
+    <!-- PRINTS -->
+    <div class="art-card" data-cat="print" onclick="openModal('XO Origin', 'print', '$45', 'X', 'The foundational print. Bold, stark, and unmistakably XO. Available in 12×16 or 18×24 on museum-quality matte paper.', '#1a0f0a')">
+      <div class="art-canvas" style="background:#0a0805">
+        <div class="art-bg"></div>
+        <div class="art-symbol" style="font-size:6rem;color:var(--gold)">X</div>
+        <div class="art-badge">Signature</div>
+      </div>
+      <div class="art-info">
+        <div class="art-cat">Art Print · Museum Matte</div>
+        <div class="art-title">XO Origin</div>
+        <div class="art-desc">The foundational print. Bold, stark, unmistakably XO.</div>
+        <div class="art-footer">
+          <div class="art-price">$45 <span class="size">18×24 in</span></div>
+          <button class="btn-add" onclick="event.stopPropagation();addToCart('XO Origin',$45)">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="art-card" data-cat="print limited" onclick="openModal('Neighborhood Watch', 'limited', '$65', '♦', 'Limited run of 50. The Neighborhood Watch print captures the intersection of community, vigilance, and love. Certificate of authenticity included.', '#0d1a0d')">
+      <div class="art-canvas" style="background:#080f08">
+        <div class="art-bg" style="background:radial-gradient(ellipse, rgba(181,69,27,0.1) 0%, transparent 70%)"></div>
+        <div class="art-symbol" style="font-size:5rem;color:var(--rust)">♦</div>
+        <div class="art-badge limited">Limited · 50</div>
+      </div>
+      <div class="art-info">
+        <div class="art-cat">Limited Print · Signed</div>
+        <div class="art-title">Neighborhood Watch</div>
+        <div class="art-desc">Limited run of 50 with certificate of authenticity.</div>
+        <div class="art-footer">
+          <div class="art-price">$65 <span class="size">16×20 in</span></div>
+          <button class="btn-add" onclick="event.stopPropagation();addToCart('Neighborhood Watch',65)">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="art-card" data-cat="print" onclick="openModal('The O', 'print', '$40', 'O', 'Where the X is tension, the O is embrace. This print explores the circle as symbol — community, wholeness, and return.', '#0a0a14')">
+      <div class="art-canvas" style="background:#080810">
+        <div class="art-bg" style="background:radial-gradient(ellipse, rgba(201,168,76,0.12) 0%, transparent 65%)"></div>
+        <div class="art-symbol" style="font-size:6rem;color:transparent;-webkit-text-stroke:3px var(--gold)">O</div>
+      </div>
+      <div class="art-info">
+        <div class="art-cat">Art Print · Museum Matte</div>
+        <div class="art-title">The O</div>
+        <div class="art-desc">The circle as symbol — community, wholeness, return.</div>
+        <div class="art-footer">
+          <div class="art-price">$40 <span class="size">12×16 in</span></div>
+          <button class="btn-add" onclick="event.stopPropagation();addToCart('The O',40)">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="art-card" data-cat="print" onclick="openModal('Philadelphia Lines', 'print', '$50', '✦', 'A geometric meditation on the grid of Philadelphia streets. Ink on matte paper, minimal and precise.', '#0a0a0a')">
+      <div class="art-canvas" style="background:#050508">
+        <div class="art-bg"></div>
+        <div class="art-symbol" style="font-size:5rem;color:var(--gold);opacity:0.6">✦</div>
+      </div>
+      <div class="art-info">
+        <div class="art-cat">Art Print · Geometric</div>
+        <div class="art-title">Philadelphia Lines</div>
+        <div class="art-desc">A geometric meditation on the city's grid. Minimal, precise.</div>
+        <div class="art-footer">
+          <div class="art-price">$50 <span class="size">18×24 in</span></div>
+          <button class="btn-add" onclick="event.stopPropagation();addToCart('Philadelphia Lines',50)">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- APPAREL -->
+    <div class="art-card" data-cat="apparel" onclick="openModal('XO Classic Tee', 'apparel', '$38', '👕', 'The essential. 100% ring-spun cotton, heavyweight. XO logo front chest, Mister Rogers XO back. Available S–3XL.', '#1a0f0a')">
+      <div class="art-canvas" style="background:#0f0a06">
+        <div class="art-bg"></div>
+        <div class="art-symbol" style="font-size:4rem">👕</div>
+        <div class="art-badge">Bestseller</div>
+      </div>
+      <div class="art-info">
+        <div class="art-cat">Apparel · Unisex Tee</div>
+        <div class="art-title">XO Classic Tee</div>
+        <div class="art-desc">Heavyweight ring-spun cotton. Sizes S–3XL. Ships in 5–7 days.</div>
+        <div class="art-footer">
+          <div class="art-price">$38 <span class="size">S – 3XL</span></div>
+          <button class="btn-add" onclick="event.stopPropagation();addToCart('XO Classic Tee',38)">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="art-card" data-cat="apparel limited" onclick="openModal('Neighborhood Watch Hoodie', 'apparel limited', '$75', '🧥', 'Limited run hoodie. 80/20 cotton-poly fleece, oversized fit. XO Neighborhood Watch graphic, embroidered chest logo. Sizes S–2XL.', '#121212')">
+      <div class="art-canvas" style="background:#0c0c0c">
+        <div class="art-bg" style="background:radial-gradient(ellipse, rgba(181,69,27,0.1) 0%, transparent 70%)"></div>
+        <div class="art-symbol" style="font-size:4rem">🧥</div>
+        <div class="art-badge limited">Limited Run</div>
+      </div>
+      <div class="art-info">
+        <div class="art-cat">Apparel · Hoodie</div>
+        <div class="art-title">Neighborhood Watch Hoodie</div>
+        <div class="art-desc">Limited run fleece. Oversized. Embroidered chest logo. Sizes S–2XL.</div>
+        <div class="art-footer">
+          <div class="art-price">$75 <span class="size">S – 2XL</span></div>
+          <button class="btn-add" onclick="event.stopPropagation();addToCart('Neighborhood Watch Hoodie',75)">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="art-card" data-cat="apparel" onclick="openModal('XO Dad Hat', 'apparel', '$32', '🧢', 'Six-panel structured dad hat. Embroidered XO logo. One size fits most. Available in Black/Gold or Cream/Black.', '#0a0a0a')">
+      <div class="art-canvas" style="background:#070707">
+        <div class="art-bg"></div>
+        <div class="art-symbol" style="font-size:4rem">🧢</div>
+      </div>
+      <div class="art-info">
+        <div class="art-cat">Apparel · Headwear</div>
+        <div class="art-title">XO Dad Hat</div>
+        <div class="art-desc">Structured dad hat. Embroidered XO. Black/Gold or Cream/Black.</div>
+        <div class="art-footer">
+          <div class="art-price">$32 <span class="size">One Size</span></div>
+          <button class="btn-add" onclick="event.stopPropagation();addToCart('XO Dad Hat',32)">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- LIFESTYLE -->
+    <div class="art-card" data-cat="lifestyle" onclick="openModal('XO Culture Mug', 'lifestyle', '$24', '☕', '11oz ceramic mug. Dishwasher safe. XO logo one side, "Consistency + Swag = Culture" the other. Printed to order.', '#0a0805')">
+      <div class="art-canvas" style="background:#080605">
+        <div class="art-bg"></div>
+        <div class="art-symbol" style="font-size:4rem">☕</div>
+      </div>
+      <div class="art-info">
+        <div class="art-cat">Lifestyle · Ceramic Mug</div>
+        <div class="art-title">XO Culture Mug</div>
+        <div class="art-desc">11oz. Dishwasher safe. "Consistency + Swag = Culture" on back.</div>
+        <div class="art-footer">
+          <div class="art-price">$24 <span class="size">11 oz</span></div>
+          <button class="btn-add" onclick="event.stopPropagation();addToCart('XO Culture Mug',24)">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="art-card" data-cat="lifestyle" onclick="openModal('XO Tote Bag', 'lifestyle', '$28', '👜', 'Heavy-duty canvas tote. Natural canvas, black XO graphic. 14L capacity. Perfect for record shopping or Bower runs.', '#0a0a05')">
+      <div class="art-canvas" style="background:#080806">
+        <div class="art-bg"></div>
+        <div class="art-symbol" style="font-size:4rem">👜</div>
+      </div>
+      <div class="art-info">
+        <div class="art-cat">Lifestyle · Canvas Tote</div>
+        <div class="art-title">XO Tote Bag</div>
+        <div class="art-desc">Heavy-duty canvas. 14L. Perfect for record shopping or Bower runs.</div>
+        <div class="art-footer">
+          <div class="art-price">$28 <span class="size">14L</span></div>
+          <button class="btn-add" onclick="event.stopPropagation();addToCart('XO Tote Bag',28)">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="art-card" data-cat="lifestyle" onclick="openModal('Phone Case', 'lifestyle', '$22', '📱', 'Slim hardshell case. XO design printed on impact-resistant matte plastic. iPhone 14/15 and Samsung Galaxy series.', '#0a0a0a')">
+      <div class="art-canvas" style="background:#070707">
+        <div class="art-bg"></div>
+        <div class="art-symbol" style="font-size:4rem">📱</div>
+      </div>
+      <div class="art-info">
+        <div class="art-cat">Lifestyle · Phone Case</div>
+        <div class="art-title">XO Phone Case</div>
+        <div class="art-desc">Slim matte hardshell. iPhone 14/15 + Samsung Galaxy series.</div>
+        <div class="art-footer">
+          <div class="art-price">$22 <span class="size">Multi-fit</span></div>
+          <button class="btn-add" onclick="event.stopPropagation();addToCart('XO Phone Case',22)">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="art-card" data-cat="print limited" onclick="openModal('Culture Equation', 'limited', '$55', '=', 'A typographic art print of the equation: Consistency + Swag = Culture. Hand-lettered. Signed. Edition of 30.', '#0a0505')">
+      <div class="art-canvas" style="background:#080404">
+        <div class="art-bg" style="background:radial-gradient(ellipse, rgba(201,168,76,0.1) 0%, transparent 70%)"></div>
+        <div class="art-symbol" style="font-size:3.5rem;color:var(--gold);letter-spacing:-0.05em">C+S=C</div>
+        <div class="art-badge limited">Ed. of 30</div>
+      </div>
+      <div class="art-info">
+        <div class="art-cat">Limited Print · Signed</div>
+        <div class="art-title">Culture Equation</div>
+        <div class="art-desc">Typographic print. Hand-lettered. Signed. Edition of 30.</div>
+        <div class="art-footer">
+          <div class="art-price">$55 <span class="size">14×18 in</span></div>
+          <button class="btn-add" onclick="event.stopPropagation();addToCart('Culture Equation',55)">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="art-card" data-cat="lifestyle" onclick="openModal('XO Sticker Pack', 'lifestyle', '$12', '⭐', '5-piece vinyl sticker pack. Weatherproof. XO logo, Neighborhood Watch, Culture Equation, Philly skyline, and one surprise sticker.', '#0a0a08')">
+      <div class="art-canvas" style="background:#080806">
+        <div class="art-bg"></div>
+        <div class="art-symbol" style="font-size:4rem">⭐</div>
+      </div>
+      <div class="art-info">
+        <div class="art-cat">Lifestyle · Sticker Pack</div>
+        <div class="art-title">XO Sticker Pack</div>
+        <div class="art-desc">5-piece vinyl pack. Weatherproof. Includes surprise sticker.</div>
+        <div class="art-footer">
+          <div class="art-price">$12 <span class="size">5 Stickers</span></div>
+          <button class="btn-add" onclick="event.stopPropagation();addToCart('XO Sticker Pack',12)">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal" onclick="closeModal(event)">
+  <div class="modal">
+    <div class="modal-grid">
+      <div class="modal-art" id="modal-art">X</div>
+      <div class="modal-body">
+        <button class="modal-close" onclick="document.getElementById('modal').classList.remove('open')">×</button>
+        <div class="modal-cat" id="modal-cat">Art Print</div>
+        <div class="modal-title" id="modal-title">Title</div>
+        <div class="modal-desc" id="modal-desc">Description</div>
+        <div class="modal-options">
+          <label>Size / Option</label>
+          <select id="modal-select">
+            <option>Standard — Included</option>
+            <option>Upgrade (+$10)</option>
+          </select>
+          <label>Quantity</label>
+          <select id="modal-qty">
+            <option>1</option><option>2</option><option>3</option><option>5</option>
+          </select>
+        </div>
+        <div class="modal-price" id="modal-price">$45</div>
+        <button class="btn-order" onclick="addToCartFromModal()">Add to Cart — Order Ships Direct</button>
+        <div class="modal-shipping">✓ Free shipping over $75 · 5–10 day delivery · Satisfaction guaranteed</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CART BAR -->
+<div class="cart-bar" id="cart-bar">
+  <div class="cart-info" id="cart-info">0 items · $0.00</div>
+  <button class="btn-checkout" onclick="checkout()">Proceed to Checkout →</button>
+</div>
+
+<footer>
+  <p>© 2025 Mister Rogers XO · Somewhere Media LLC · All art is print-on-demand and ships directly to you · <a href="index.html">Back to Home</a></p>
+</footer>
+
+<script>
+  let cart = [];
+  let currentItem = {};
+
+  function filterItems(cat, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const cards = document.querySelectorAll('.art-card');
+    let visible = 0;
+    cards.forEach(card => {
+      const cats = card.dataset.cat || '';
+      if (cat === 'all' || cats.includes(cat)) {
+        card.style.display = '';
+        visible++;
+      } else {
+        card.style.display = 'none';
+      }
+    });
+    document.getElementById('item-count').textContent = visible + ' pieces';
+  }
+
+  function openModal(title, cat, price, symbol, desc, bg) {
+    document.getElementById('modal-title').textContent = title;
+    document.getElementById('modal-cat').textContent = cat;
+    document.getElementById('modal-price').textContent = price;
+    document.getElementById('modal-art').textContent = symbol;
+    document.getElementById('modal-art').style.background = bg || 'var(--black)';
+    document.getElementById('modal-desc').textContent = desc;
+    currentItem = { title, price: parseInt(price.replace('$','')) };
+    document.getElementById('modal').classList.add('open');
+  }
+
+  function closeModal(e) {
+    if (e.target === document.getElementById('modal')) {
+      document.getElementById('modal').classList.remove('open');
+    }
+  }
+
+  function addToCart(name, price) {
+    cart.push({ name, price });
+    updateCart();
+  }
+
+  function addToCartFromModal() {
+    if (currentItem.title) {
+      addToCart(currentItem.title, currentItem.price);
+      document.getElementById('modal').classList.remove('open');
+    }
+  }
+
+  function updateCart() {
+    const total = cart.reduce((s,i) => s + i.price, 0);
+    document.getElementById('cart-info').textContent = `${cart.length} item${cart.length !== 1 ? 's' : ''} · $${total}.00`;
+    document.getElementById('cart-bar').classList.add('visible');
+  }
+
+  function checkout() {
+    const total = cart.reduce((s,i) => s + i.price, 0);
+    const items = cart.map(i => i.name).join(', ');
+    alert(`Order Summary:\n${items}\n\nTotal: $${total}.00\n\nIn production: Connect your Printful, Printify, or Gelato account to activate live checkout with direct drop shipping. Your order will then ship straight to the customer within 5–10 business days.`);
+  }
+</script>
+
+</body>
+</html>

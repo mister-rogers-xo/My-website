@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mister Rogers XO | Culture. Art. Community.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0a0a;
+    --cream: #f5f0e8;
+    --gold: #c9a84c;
+    --red: #c0392b;
+    --rust: #b5451b;
+    --warm-gray: #2a2420;
+    --accent: #e8d5a3;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--cream);
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.2rem 3rem;
+    background: rgba(10,10,10,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+  }
+
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 900;
+    color: var(--gold);
+    text-decoration: none;
+    letter-spacing: 0.05em;
+  }
+
+  .nav-logo span { color: var(--cream); }
+
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+
+  .nav-links a {
+    color: var(--cream);
+    text-decoration: none;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    opacity: 0.8;
+    transition: all 0.3s;
+  }
+
+  .nav-links a:hover { color: var(--gold); opacity: 1; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 8rem 4rem 4rem 6rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .hero-tag::before {
+    content: '';
+    display: inline-block;
+    width: 40px;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3.5rem, 6vw, 6rem);
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.3rem;
+  }
+
+  .hero-title .xo {
+    color: var(--gold);
+    font-style: italic;
+    font-size: clamp(4rem, 7vw, 7rem);
+    display: block;
+  }
+
+  .hero-sub {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: rgba(245,240,232,0.65);
+    margin: 2rem 0 3rem;
+    max-width: 420px;
+    font-weight: 300;
+  }
+
+  .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+  .btn-primary {
+    background: var(--gold);
+    color: var(--black);
+    padding: 0.9rem 2.2rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-weight: 700;
+    transition: all 0.3s;
+    border: 2px solid var(--gold);
+  }
+
+  .btn-primary:hover {
+    background: transparent;
+    color: var(--gold);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--cream);
+    padding: 0.9rem 2.2rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid rgba(245,240,232,0.3);
+    transition: all 0.3s;
+  }
+
+  .btn-outline:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+
+  .hero-right {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .hero-art {
+    width: 85%;
+    max-width: 520px;
+    aspect-ratio: 1;
+    position: relative;
+    z-index: 2;
+  }
+
+  .xo-symbol {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 22vw;
+    font-weight: 900;
+    font-style: italic;
+    color: transparent;
+    -webkit-text-stroke: 2px var(--gold);
+    opacity: 0.15;
+    animation: pulse 4s ease-in-out infinite;
+    position: absolute;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 0.1; transform: scale(1); }
+    50% { opacity: 0.2; transform: scale(1.03); }
+  }
+
+  .hero-grid-art {
+    width: 85%;
+    max-width: 450px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 12px;
+    position: relative;
+    z-index: 3;
+  }
+
+  .art-tile {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    font-weight: 900;
+    font-style: italic;
+    border: 1px solid rgba(201,168,76,0.3);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s;
+    cursor: pointer;
+  }
+
+  .art-tile::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+
+  .art-tile:hover { border-color: var(--gold); transform: scale(1.02); }
+  .art-tile:hover::before { opacity: 1; }
+
+  .tile-1 { background: var(--warm-gray); color: var(--gold); }
+  .tile-1::before { background: linear-gradient(135deg, rgba(201,168,76,0.1), transparent); }
+
+  .tile-2 { background: #1a1008; color: var(--cream); }
+  .tile-2::before { background: linear-gradient(135deg, rgba(181,69,27,0.2), transparent); }
+
+  .tile-3 { background: #0d1a0d; color: var(--gold); }
+  .tile-3::before { background: linear-gradient(135deg, rgba(201,168,76,0.15), transparent); }
+
+  .tile-4 { background: #1a0f0a; color: var(--rust); }
+  .tile-4::before { background: linear-gradient(135deg, rgba(181,69,27,0.2), transparent); }
+
+  .tile-label {
+    position: absolute;
+    bottom: 0.6rem;
+    left: 0.6rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.5rem;
+    letter-spacing: 0.15em;
+    color: rgba(245,240,232,0.4);
+    text-transform: uppercase;
+  }
+
+  .hero-bg-lines {
+    position: absolute;
+    inset: 0;
+    background-image: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 60px,
+      rgba(201,168,76,0.03) 60px,
+      rgba(201,168,76,0.03) 61px
+    );
+    pointer-events: none;
+  }
+
+  /* MARQUEE */
+  .marquee-bar {
+    background: var(--gold);
+    padding: 0.75rem 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .marquee-inner {
+    display: inline-flex;
+    animation: marquee 20s linear infinite;
+    gap: 3rem;
+  }
+
+  .marquee-item {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: var(--black);
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+
+  .marquee-dot { color: var(--black); opacity: 0.4; }
+
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* SECTIONS */
+  section { padding: 7rem 6rem; }
+
+  .section-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .section-tag::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(201,168,76,0.2);
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 900;
+    line-height: 1.05;
+    margin-bottom: 1.5rem;
+  }
+
+  /* PILLARS */
+  .pillars {
+    background: var(--warm-gray);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+  }
+
+  .pillar {
+    padding: 4rem 3rem;
+    border-right: 1px solid rgba(201,168,76,0.15);
+    position: relative;
+    overflow: hidden;
+    transition: background 0.4s;
+  }
+
+  .pillar:last-child { border-right: none; }
+  .pillar:hover { background: rgba(201,168,76,0.05); }
+
+  .pillar-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 5rem;
+    font-weight: 900;
+    color: rgba(201,168,76,0.08);
+    position: absolute;
+    top: 1rem;
+    right: 1.5rem;
+    line-height: 1;
+    font-style: italic;
+  }
+
+  .pillar-icon {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .pillar h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--gold);
+  }
+
+  .pillar p {
+    font-size: 0.9rem;
+    line-height: 1.8;
+    color: rgba(245,240,232,0.6);
+    font-weight: 300;
+  }
+
+  .pillar-link {
+    display: inline-block;
+    margin-top: 2rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+    text-decoration: none;
+    text-transform: uppercase;
+    border-bottom: 1px solid rgba(201,168,76,0.3);
+    padding-bottom: 2px;
+    transition: border-color 0.3s;
+  }
+
+  .pillar-link:hover { border-color: var(--gold); }
+
+  /* ABOUT */
+  .about-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: center;
+    background: var(--black);
+    border-top: 1px solid rgba(201,168,76,0.1);
+  }
+
+  .about-visual {
+    position: relative;
+  }
+
+  .about-box {
+    background: var(--warm-gray);
+    padding: 4rem 3rem;
+    border: 1px solid rgba(201,168,76,0.2);
+    position: relative;
+  }
+
+  .about-box::before {
+    content: '"';
+    font-family: 'Playfair Display', serif;
+    font-size: 8rem;
+    color: var(--gold);
+    opacity: 0.15;
+    position: absolute;
+    top: -1rem;
+    left: 2rem;
+    line-height: 1;
+  }
+
+  .about-quote {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-style: italic;
+    line-height: 1.6;
+    color: var(--cream);
+    position: relative;
+    z-index: 1;
+  }
+
+  .about-quote-attr {
+    margin-top: 1.5rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+
+  .about-stat-row {
+    display: flex;
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+
+  .stat {
+    text-align: center;
+    flex: 1;
+    padding: 1.5rem 1rem;
+    border: 1px solid rgba(201,168,76,0.15);
+  }
+
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: var(--gold);
+    font-style: italic;
+  }
+
+  .stat-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.15em;
+    color: rgba(245,240,232,0.5);
+    text-transform: uppercase;
+    margin-top: 0.4rem;
+  }
+
+  .about-text p {
+    font-size: 1rem;
+    line-height: 1.9;
+    color: rgba(245,240,232,0.7);
+    margin-bottom: 1.5rem;
+    font-weight: 300;
+  }
+
+  .about-text strong { color: var(--cream); font-weight: 500; }
+
+  /* BLOG PREVIEW */
+  .blog-preview { background: var(--warm-gray); }
+
+  .blog-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .blog-card {
+    background: var(--black);
+    border: 1px solid rgba(201,168,76,0.1);
+    overflow: hidden;
+    transition: all 0.4s;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+
+  .blog-card:hover { border-color: rgba(201,168,76,0.4); transform: translateY(-4px); }
+
+  .blog-card-img {
+    aspect-ratio: 16/9;
+    background: var(--warm-gray);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    font-style: italic;
+    color: rgba(201,168,76,0.2);
+    border-bottom: 1px solid rgba(201,168,76,0.1);
+  }
+
+  .blog-card.featured .blog-card-img { aspect-ratio: 3/2; font-size: 5rem; }
+
+  .blog-card-body { padding: 1.5rem; }
+
+  .blog-cat {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+
+  .blog-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    line-height: 1.35;
+    margin-bottom: 0.75rem;
+  }
+
+  .blog-card.featured h3 { font-size: 1.5rem; }
+
+  .blog-card p {
+    font-size: 0.82rem;
+    line-height: 1.7;
+    color: rgba(245,240,232,0.55);
+    font-weight: 300;
+  }
+
+  .blog-meta {
+    margin-top: 1rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.1em;
+    color: rgba(245,240,232,0.3);
+  }
+
+  /* SHOP PREVIEW */
+  .shop-preview { background: var(--black); }
+
+  .shop-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .product-card {
+    border: 1px solid rgba(201,168,76,0.15);
+    overflow: hidden;
+    transition: all 0.4s;
+    cursor: pointer;
+    background: var(--warm-gray);
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+
+  .product-card:hover { border-color: var(--gold); transform: translateY(-4px); }
+
+  .product-img {
+    aspect-ratio: 1;
+    background: var(--black);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem;
+    font-style: italic;
+    color: rgba(201,168,76,0.25);
+    border-bottom: 1px solid rgba(201,168,76,0.1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .product-badge {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    background: var(--gold);
+    color: var(--black);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.5rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.5rem;
+    font-weight: 700;
+  }
+
+  .product-body { padding: 1.25rem; }
+
+  .product-body h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+  }
+
+  .product-type {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.1em;
+    color: rgba(245,240,232,0.4);
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+
+  .product-price {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--gold);
+    font-weight: 700;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--warm-gray);
+    border-top: 1px solid rgba(201,168,76,0.2);
+    padding: 4rem 6rem;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 4rem;
+  }
+
+  .footer-brand .nav-logo { font-size: 1.6rem; display: block; margin-bottom: 1rem; }
+
+  .footer-brand p {
+    font-size: 0.85rem;
+    line-height: 1.8;
+    color: rgba(245,240,232,0.5);
+    font-weight: 300;
+    max-width: 280px;
+  }
+
+  .footer-col h4 {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+
+  .footer-col ul { list-style: none; }
+
+  .footer-col li {
+    margin-bottom: 0.75rem;
+  }
+
+  .footer-col a {
+    color: rgba(245,240,232,0.55);
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: color 0.3s;
+  }
+
+  .footer-col a:hover { color: var(--gold); }
+
+  .footer-bottom {
+    background: var(--black);
+    padding: 1.5rem 6rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(201,168,76,0.1);
+  }
+
+  .footer-bottom p {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.15em;
+    color: rgba(245,240,232,0.25);
+    text-transform: uppercase;
+  }
+
+  .social-links { display: flex; gap: 1.5rem; }
+
+  .social-links a {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.15em;
+    color: rgba(245,240,232,0.35);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+
+  .social-links a:hover { color: var(--gold); }
+
+  /* NEWSLETTER */
+  .newsletter {
+    background: var(--gold);
+    padding: 5rem 6rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 4rem;
+  }
+
+  .newsletter h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: var(--black);
+    line-height: 1.1;
+  }
+
+  .newsletter p {
+    color: rgba(10,10,10,0.65);
+    margin-top: 0.75rem;
+    font-size: 0.95rem;
+    font-weight: 300;
+  }
+
+  .newsletter-form {
+    display: flex;
+    gap: 0;
+    flex-shrink: 0;
+    min-width: 400px;
+  }
+
+  .newsletter-form input {
+    flex: 1;
+    padding: 1rem 1.5rem;
+    background: var(--black);
+    border: none;
+    color: var(--cream);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    outline: none;
+  }
+
+  .newsletter-form input::placeholder { color: rgba(245,240,232,0.3); }
+
+  .newsletter-form button {
+    padding: 1rem 2rem;
+    background: var(--black);
+    border: 2px solid var(--black);
+    color: var(--gold);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: 700;
+  }
+
+  .newsletter-form button:hover {
+    background: transparent;
+    color: var(--black);
+    border-color: var(--black);
+  }
+
+  @media (max-width: 1024px) {
+    nav { padding: 1rem 2rem; }
+    .hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-left { padding: 8rem 2rem 3rem; }
+    .hero-right { padding: 3rem 2rem; }
+    section { padding: 5rem 2rem; }
+    .pillars { grid-template-columns: 1fr; }
+    .pillar { border-right: none; border-bottom: 1px solid rgba(201,168,76,0.15); }
+    .about-section { grid-template-columns: 1fr; gap: 3rem; }
+    .blog-grid { grid-template-columns: 1fr; }
+    .shop-grid { grid-template-columns: repeat(2, 1fr); }
+    footer { grid-template-columns: 1fr 1fr; gap: 2rem; padding: 3rem 2rem; }
+    .footer-bottom { padding: 1.5rem 2rem; flex-direction: column; gap: 1rem; }
+    .newsletter { flex-direction: column; padding: 4rem 2rem; }
+    .newsletter-form { min-width: unset; width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Mister Rogers <span>XO</span></a>
+  <ul class="nav-links">
+    <li><a href="art-library.html">Art + Shop</a></li>
+    <li><a href="blog.html">The Blog</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="linktree.html">Links</a></li>
+    <li><a href="art-library.html" style="color:var(--gold)">Shop Now</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" style="padding:0">
+  <div class="hero-left">
+    <div class="hero-tag">Philadelphia · Culture · Art</div>
+    <h1 class="hero-title">
+      Mister Rogers<br>
+      <span class="xo">XO</span>
+    </h1>
+    <p class="hero-sub">
+      Art, culture, and community from the heart of Philadelphia. 
+      Where authenticity meets expression, and every room tells a story.
+    </p>
+    <div class="hero-ctas">
+      <a href="art-library.html" class="btn-primary">Explore the Art</a>
+      <a href="blog.html" class="btn-outline">Read the Blog</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-bg-lines"></div>
+    <div class="xo-symbol">XO</div>
+    <div class="hero-grid-art">
+      <div class="art-tile tile-1">X<span class="tile-label">Original Print</span></div>
+      <div class="art-tile tile-2">O<span class="tile-label">Limited Drop</span></div>
+      <div class="art-tile tile-3">✦<span class="tile-label">Culture</span></div>
+      <div class="art-tile tile-4">♦<span class="tile-label">Community</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-bar">
+  <div class="marquee-inner">
+    <span class="marquee-item">Art</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Culture</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Community</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Philadelphia</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Authenticity</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Mister Rogers XO</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Drop Shipping</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Original Prints</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Art</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Culture</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Community</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Philadelphia</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Authenticity</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Mister Rogers XO</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Drop Shipping</span><span class="marquee-dot">·</span>
+    <span class="marquee-item">Original Prints</span><span class="marquee-dot">·</span>
+  </div>
+</div>
+
+<!-- PILLARS -->
+<section class="pillars" style="padding:0">
+  <div class="pillar">
+    <div class="pillar-num">01</div>
+    <div class="pillar-icon">🖼️</div>
+    <h3>The Art Library</h3>
+    <p>A curated collection of XO original prints, limited drops, and wearable art. Every piece carries a story rooted in Philadelphia culture and the neighborhoods that raised us.</p>
+    <a href="art-library.html" class="pillar-link">Browse the Collection →</a>
+  </div>
+  <div class="pillar">
+    <div class="pillar-num">02</div>
+    <div class="pillar-icon">📖</div>
+    <h3>The Blog</h3>
+    <p>Raw, honest stories from 20+ years inside Philadelphia's music, nightlife, and community spaces. Culture creation from someone who lived it, not just observed it.</p>
+    <a href="blog.html" class="pillar-link">Read the Stories →</a>
+  </div>
+  <div class="pillar">
+    <div class="pillar-num">03</div>
+    <div class="pillar-icon">🤝</div>
+    <h3>The Community</h3>
+    <p>Events, podcasts, and programming designed to build real connection. Diverse, well-run rooms are always successful rooms. That's the philosophy we live by.</p>
+    <a href="linktree.html" class="pillar-link">Get Connected →</a>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about-section" id="about">
+  <div class="about-visual">
+    <div class="about-box">
+      <p class="about-quote">"Consistency + Swag = Culture. It's not a slogan — it's the equation I've been solving for twenty years on the floors, stages, and streets of Philadelphia."</p>
+      <div class="about-quote-attr">— Rob Rogers III · Mister Rogers XO</div>
+    </div>
+    <div class="about-stat-row">
+      <div class="stat">
+        <div class="stat-num">20+</div>
+        <div class="stat-label">Years in Culture</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">PHL</div>
+        <div class="stat-label">Born & Rooted</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">∞</div>
+        <div class="stat-label">Community First</div>
+      </div>
+    </div>
+  </div>
+  <div class="about-text">
+    <div class="section-tag">About Mister Rogers XO</div>
+    <h2 class="section-title">Culture Built on Authenticity</h2>
+    <p>
+      Mister Rogers XO is the creative expression of <strong>Rob Rogers III</strong> — Philadelphia native, cultural consultant, music booker, and community architect with roots running deep through the city's stages, venues, and neighborhoods.
+    </p>
+    <p>
+      This brand is where that philosophy becomes art. Every XO print, every drop, every blog entry is an extension of the belief that <strong>authentic culture is the most powerful commercial asset</strong> there is. We don't manufacture cool — we document and share what's real.
+    </p>
+    <p>
+      Born in Philadelphia. Rooted in Houston. Fluent in both. The XO represents the love and respect that holds communities together when everything else tries to pull them apart.
+    </p>
+    <a href="linktree.html" class="btn-primary" style="margin-top:1rem">See Everything We Do</a>
+  </div>
+</section>
+
+<!-- BLOG PREVIEW -->
+<section class="blog-preview">
+  <div class="section-tag">From the Journal</div>
+  <h2 class="section-title">The Blog</h2>
+  <div class="blog-grid">
+    <a href="blog.html" class="blog-card featured">
+      <div class="blog-card-img">XO</div>
+      <div class="blog-card-body">
+        <div class="blog-cat">Featured · Culture</div>
+        <h3>The Door, The Stage, and the Space In Between: 13 Years at the Intersection of Philadelphia Nightlife</h3>
+        <p>What happens when the bouncer is also the band manager, the culture curator, and the guy who grew your Instagram from 3K to 12K? You get a story that doesn't fit any job description.</p>
+        <div class="blog-meta">Rob Rogers III · Philadelphia</div>
+      </div>
+    </a>
+    <a href="blog.html" class="blog-card">
+      <div class="blog-card-img" style="font-size:2rem">♟</div>
+      <div class="blog-card-body">
+        <div class="blog-cat">Philosophy</div>
+        <h3>Consistency + Swag = Culture</h3>
+        <p>The equation that changed how I see every room I walk into.</p>
+        <div class="blog-meta">Culture + Commerce</div>
+      </div>
+    </a>
+    <a href="blog.html" class="blog-card">
+      <div class="blog-card-img" style="font-size:2rem">🎵</div>
+      <div class="blog-card-body">
+        <div class="blog-cat">Music + Community</div>
+        <h3>What Booking Bands Taught Me About Human Nature</h3>
+        <p>Music booking is really just emotional intelligence with a contract.</p>
+        <div class="blog-meta">Music · Events</div>
+      </div>
+    </a>
+  </div>
+  <div style="text-align:center;margin-top:3rem">
+    <a href="blog.html" class="btn-outline">Read All Posts →</a>
+  </div>
+</section>
+
+<!-- SHOP PREVIEW -->
+<section class="shop-preview">
+  <div class="section-tag">The Collection</div>
+  <h2 class="section-title">XO Art + Merch</h2>
+  <div class="shop-grid">
+    <a href="art-library.html" class="product-card">
+      <div class="product-img">
+        X
+        <div class="product-badge">New Drop</div>
+      </div>
+      <div class="product-body">
+        <div class="product-type">Art Print · 18×24</div>
+        <h4>XO Origin Print</h4>
+        <div class="product-price">$45</div>
+      </div>
+    </a>
+    <a href="art-library.html" class="product-card">
+      <div class="product-img" style="font-size:2.5rem">👕</div>
+      <div class="product-body">
+        <div class="product-type">Wearable · Unisex</div>
+        <h4>Mister Rogers XO Tee</h4>
+        <div class="product-price">$38</div>
+      </div>
+    </a>
+    <a href="art-library.html" class="product-card">
+      <div class="product-img" style="font-size:2.5rem">
+        ♦
+        <div class="product-badge">Limited</div>
+      </div>
+      <div class="product-body">
+        <div class="product-type">Art Print · 12×16</div>
+        <h4>Neighborhood Watch</h4>
+        <div class="product-price">$35</div>
+      </div>
+    </a>
+    <a href="art-library.html" class="product-card">
+      <div class="product-img" style="font-size:2.5rem">☕</div>
+      <div class="product-body">
+        <div class="product-type">Lifestyle · 11oz</div>
+        <h4>XO Culture Mug</h4>
+        <div class="product-price">$24</div>
+      </div>
+    </a>
+  </div>
+  <div style="text-align:center;margin-top:3rem">
+    <a href="art-library.html" class="btn-primary">Shop the Full Collection</a>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<div class="newsletter">
+  <div>
+    <h2>Stay in the Neighborhood.</h2>
+    <p>New drops, blog posts, event announcements. No spam — just culture.</p>
+  </div>
+  <div class="newsletter-form">
+    <input type="email" placeholder="your@email.com">
+    <button>Subscribe</button>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">
+    <a href="index.html" class="nav-logo">Mister Rogers <span style="color:var(--cream)">XO</span></a>
+    <p>Culture, art, and community from Philadelphia. Authentic by design — never by accident.</p>
+  </div>
+  <div class="footer-col">
+    <h4>Navigate</h4>
+    <ul>
+      <li><a href="art-library.html">Art Library</a></li>
+      <li><a href="blog.html">The Blog</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="linktree.html">All Links</a></li>
+    </ul>
+  </div>
+  <div class="footer-col">
+    <h4>Shop</h4>
+    <ul>
+      <li><a href="art-library.html">Art Prints</a></li>
+      <li><a href="art-library.html">Apparel</a></li>
+      <li><a href="art-library.html">Limited Drops</a></li>
+      <li><a href="art-library.html">Gift Cards</a></li>
+    </ul>
+  </div>
+  <div class="footer-col">
+    <h4>Connect</h4>
+    <ul>
+      <li><a href="#">Instagram</a></li>
+      <li><a href="#">Podcast</a></li>
+      <li><a href="#">Newsletter</a></li>
+      <li><a href="#">Booking Inquiries</a></li>
+    </ul>
+  </div>
+</footer>
+<div class="footer-bottom">
+  <p>© 2025 Mister Rogers XO · Somewhere Media LLC · Philadelphia, PA</p>
+  <div class="social-links">
+    <a href="#">Instagram</a>
+    <a href="#">Podcast</a>
+    <a href="#">Newsletter</a>
+  </div>
+</div>
+
+</body>
+</html>
